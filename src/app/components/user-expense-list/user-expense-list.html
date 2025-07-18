@@ -1,0 +1,28 @@
+<h3>Welcome, {{username}}</h3>
+
+<form action="" class="form-group">
+    <button class="addExpenseButton" (click)="addNewExpense()">Add Expense</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Expense ID</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let expense of expenses">
+                <td>{{ expense.expenseID }}</td>
+                <td>{{ expense.title }}</td>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.date | date: 'MM/dd/yyyy' }}</td>
+                <td>{{ expense.categoryName }}</td>
+                <td><button class="btn btn-warning">Edit</button></td>
+                <td><button class="btn btn-danger">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+</form>

@@ -1,0 +1,30 @@
+/* .login-box{
+    padding: 25px;
+    margin: 0 auto;
+} */
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+.login-btn{
+    padding: 12px;
+    margin-top: 20px;
+}
+
+.login-box {
+      padding: 30px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+        .center-wrapper {
+
+      height: 100vh; /* Full viewport height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    

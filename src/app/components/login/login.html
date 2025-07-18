@@ -1,0 +1,24 @@
+
+<div class="center-wrapper">
+  <div class="login-box">
+    <form class="form-group"  [formGroup]="loginForm" (ngSubmit)="loginFunction()">
+        <h3>Log In</h3>
+      <div>
+        <label for="userName">Username</label>
+        <input type="text" class="form-control" formControlName="userName" id="userName">
+      </div>
+      <div>
+        <label for="userPassword">Password</label>
+        <input type="password" class="form-control" formControlName="userPassword" id="userPassword">
+      </div>
+      <div style="margin-top: 15px;">
+        <button type="submit" class="btn btn-success btn-block">Login</button>
+      </div>
+      <div>
+        <p>Forgot Password | Not a User ?</p>
+        <button routerLink='/signup'>Signup</button>
+      </div>
+    </form>
+  </div>
+</div>
+

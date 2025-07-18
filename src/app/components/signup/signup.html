@@ -1,0 +1,22 @@
+<div class="center-wrapper">
+  <div class="login-box">
+    <form class="form-group" [formGroup]="signupForm" (ngSubmit)="signupFunction()">
+        <h3>Create an account</h3>
+      <div>
+        <label for="userName">Username</label>
+        <input type="text" class="form-control" formControlName="userName" id="userName">
+      </div>
+        <div>
+        <label for="userEmail">Email</label>
+        <input type="text" class="form-control" formControlName="userEmail" id="userEmail">
+      </div>
+      <div>
+        <label for="userPassword">Password</label>
+        <input type="password" class="form-control" formControlName="userPassword" id="userPassword">
+      </div>
+      <div>
+        <button type="submit" class="btn btn-success btn-block" >Signup</button>
+      </div>
+    </form>
+  </div>
+</div>
