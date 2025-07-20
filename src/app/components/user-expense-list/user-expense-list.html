@@ -1,7 +1,7 @@
 <h3>Welcome, {{username}}</h3>
 
-<form action="" class="form-group">
-    <button class="addExpenseButton" (click)="addNewExpense()">Add Expense</button>
+<form action="" class="form-group" >
+    <button class="addExpenseButton"  (click)="addNewExpense()">Add Expense</button>
     <table class="table">
         <thead>
             <tr>
@@ -19,7 +19,7 @@
                 <td>{{ expense.title }}</td>
                 <td>{{ expense.amount }}</td>
                 <td>{{ expense.date | date: 'MM/dd/yyyy' }}</td>
-                <td>{{ expense.categoryName }}</td>
+                <td>{{ expense.category?.categoryName }}</td>
                 <td><button class="btn btn-warning">Edit</button></td>
                 <td><button class="btn btn-danger">Delete</button></td>
             </tr>

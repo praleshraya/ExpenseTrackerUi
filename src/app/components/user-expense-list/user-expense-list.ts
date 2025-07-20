@@ -56,32 +56,27 @@ export class UserExpenseList implements OnInit {
   //   this.loadExpenses();
   // }
 
+//   loadExpenses(): void {
+//   console.log('Fetching expenses for userID:', this.userID);
+//   this.userExpenseService.getAllExpensesByUser(this.userID).subscribe(
+//     (data) => {
+//       console.log('Fetched Expenses:', data);
+//       this.expenses = data;
+
+//       // Explicitly trigger change detection
+//       this.cdr.detectChanges();  // Manually trigger change detection
+//     },
+//     (error) => {
+//       console.error('Error loading expenses:', error);
+//     }
+//   );
+// }
+
   loadExpenses(): void {
-  console.log('Fetching expenses for userID:', this.userID);
-  this.userExpenseService.getAllExpensesByUser(this.userID).subscribe(
-    (data) => {
-      console.log('Fetched Expenses:', data);
-      this.expenses = data;
-
-      // Explicitly trigger change detection
-      this.cdr.detectChanges();  // Manually trigger change detection
-    },
-    (error) => {
-      console.error('Error loading expenses:', error);
-    }
-  );
-}
-
-  // loadExpenses(): void {
-  //   this.userExpenseService.getAllExpensesByUser(this.userID).subscribe(
-  //     (data) => {
-  //       this.expenses = data;
-  //     },
-  //     (error) => {
-  //       console.error('Error loading expenses:', error);
-  //     }
-  //   );
-  // }
+    this.userExpenseService.getExpensesByUser(this.userID).subscribe(result =>{
+      this.expenses = result
+    });
+  }
   // loadExpenses(): void {
   //   this.userExpenseService.getAllExpensesByUser(this.userID).subscribe(data => {
   //     console.log('Fetched Expenses:', data); 
@@ -94,6 +89,6 @@ export class UserExpenseList implements OnInit {
 
 
   addNewExpense(): void {
-  this.router.navigate(['/addExpense']);
+  this.router.navigate['/addExpense/:userID'];
 }
 }

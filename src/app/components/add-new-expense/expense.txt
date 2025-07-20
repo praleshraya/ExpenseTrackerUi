@@ -1,0 +1,176 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../models/user';
+import { UserExpenseService } from '../../services/user-expense-service';
+import { UserExpense } from '../../models/user-expense';
+import { Category } from '../../models/category';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-add-new-expense',
+  standalone:true,
+  imports: [FormsModule,ReactiveFormsModule, CommonModule],
+  templateUrl: './add-new-expense.html',
+  styleUrl: './add-new-expense.css'
+})
+export class AddNewExpense implements OnInit {
+
+
+  addNewExpenseForm: FormGroup;
+  expenseID: number;
+  userID: number;
+    categoryID: number;
+  categories: Category[]=[];
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private userExpenseService: UserExpenseService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    //constructor
+     this.addNewExpenseForm = this.formBuilder.group({
+      title: ['',Validators.required],
+      amount: ['0',[Validators.required,Validators.min(0)]],
+      date: ['',Validators.required],
+      categoryName: ['',Validators.required]
+    })
+  }
+
+ngOnInit(): void {
+  this.expenseID = parseInt(this.route.snapshot.paramMap.get('expenseID') ?? '', 10);
+  this.userID = parseInt(this.route.snapshot.paramMap.get('userID') ?? '', 10); // 👈
+
+  this.userExpenseService.getCategories().subscribe((categories: Category[]) => {
+    this.categories = categories;
+  });
+
+  if (this.expenseID && this.userID) {
+    this.userExpenseService.getAllExpensesByUser(this.userID).subscribe((expenses: UserExpense[]) => {
+      const expense = expenses.find(exp => exp.expenseID === this.expenseID);
+      if (expense) {
+        this.addNewExpenseForm.patchValue({
+          title: expense.title,
+          amount: expense.amount,
+          date: expense.date,
+          categoryName: expense.categoryName //  match formControlName
+        });
+      }
+    });
+  }
+}
+
+
+//   ngOnInit(): void {
+//  this.expenseID= parseInt(this.route.snapshot.paramMap.get('expenseID') ?? '', 10);  //valid expeense id liney
+
+//   this.userExpenseService.getCategories().subscribe((categories: Category[]) => {
+//       this.categories = categories;
+//       });
+ 
+//  if(this.expenseID) //checking not null, undefined , or expense is valid number or not.
+//   {
+//     //update value....
+//       this.userExpenseService.getAllExpensesByUser(this.expenseID).subscribe((expense: UserExpense[])=>
+//           {  //such that, product aaisake pachi k garne ? 
+//              this.addNewExpenseForm.patchValue(expense)    // just populating form with expense details. 
+//     })
+//   }
+ 
+    
+
+ 
+
+   newExpenseItem: UserExpense;
+   
+//   createUserExpense(): void {
+//   const newExpenseItem: UserExpense = this.addNewExpenseForm.value;
+
+//   // Add userID to the newExpenseItem if not already set
+//   newExpenseItem.userID = this.userID;  // Make sure userID is set
+
+//   if (this.expenseID) {
+//     // Update existing expense
+//     this.userExpenseService.updateUserExpense(this.expenseID, newExpenseItem).subscribe((result: UserExpense) => {
+//       if (result) {
+//         alert('Expense updated successfully');
+//         this.router.navigate([`/expenses/users/${this.userID}`]);
+//       }
+//     });
+//   } else {
+//     // Create new expense
+//     this.userExpenseService.createUserExpense(newExpenseItem).subscribe((result: UserExpense) => {
+//       if (result) {
+//         alert('Expense created successfully');
+//         this.router.navigate([`/expenses/users/${this.userID}`]);
+//       }
+//     });
+//   }
+// }
+
+
+  
+// createUserExpense(): void {
+//   const newExpenseItem: UserExpense = this.addNewExpenseForm.value;
+
+//   // Ensure userID is set correctly in the expense object
+//   newExpenseItem.userID = this.userID;  // Make sure this userID is coming from the logged-in user
+
+//   if (this.expenseID) {
+//     // Update existing expense
+//     this.userExpenseService.updateUserExpense(this.expenseID, newExpenseItem).subscribe((result: UserExpense) => {
+//       if (result) {
+//         alert('Expense updated successfully');
+//         this.router.navigate([`/expenses/users/${this.userID}`]);
+//       }
+//     });
+//   } else {
+//     // Create new expense
+//     this.userExpenseService.createUserExpense(newExpenseItem).subscribe((result: UserExpense) => {
+//       if (result) {
+//         alert('Expense created successfully');
+//         this.router.navigate([`/expenses/users/${this.userID}`]);
+//       }
+//     });
+//   }
+// }
+
+  
+  createUserExpense(): void {
+  const newExpenseItem: UserExpense = this.addNewExpenseForm.value;
+  
+  // Ensure userID is included in the form data
+  newExpenseItem.userID = this.userID; // Ensure this is passed correctly
+  newExpenseItem.categoryID = this.categoryID;
+
+  // Check if the user has selected a category
+  if (!newExpenseItem.categoryID) {
+    alert('Category is required');
+    return;
+  }
+
+  if (this.expenseID) {
+    // Update existing expense
+    this.userExpenseService.updateUserExpense(this.expenseID, newExpenseItem).subscribe((result: UserExpense) => {
+      if (result) {
+        alert('Expense updated successfully');
+        this.router.navigate([`/expenses/users/${this.userID}`]);
+      }
+    });
+  } else {
+    // Create new expense
+    this.userExpenseService.createUserExpense(newExpenseItem).subscribe((result: UserExpense) => {
+      if (result) {
+        alert('Expense created successfully');
+        this.router.navigate([`/expenses/users/${this.userID}`]);
+      }
+    });
+  }
+}
+
+   
+  
+
+
+}

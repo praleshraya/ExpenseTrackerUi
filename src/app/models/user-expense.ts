@@ -2,13 +2,10 @@ import { Category } from "./category";
 import { User } from "./user";
 
 export interface UserExpense {
-   
-expenseID: number;
+  expenseID?: number;
   title: string;
   amount: number;
-  date: string;          
-  userID: number;
-  categoryID: number;
-  categoryName: string;
-   
+  date: string;
+  user: Partial<User>;           // Only userID needed for submission
+  category: Category;            // At least categoryID needed
 }

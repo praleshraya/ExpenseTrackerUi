@@ -12,31 +12,16 @@
       <!-- Amount -->
       <div class="mb-3">
         <label for="amount" class="form-label">Amount</label>
-        <input type="number" formControlName="amount" name="amount" id="amount" class="form-control"
-          required>
+        <input type="number" formControlName="amount" name="amount" id="amount" class="form-control" required>
       </div>
 
       <!-- CategoryName -->
       <div class="mb-3">
         <label for="categoryName" class="form-label">Category</label>
-        <select formControlName="categoryName" name="categoryName" id="categoryName" class="form-control"
-          required>
-
-          <!-- Placeholder -->
+        <select formControlName="categoryID" id="categoryID" class="form-control" required>
           <option value="" disabled selected>Select Category</option>
-
-          <option *ngFor="let category of categories" [value]="category.categoryName">{{ category.categoryName }}</option>
-
-          <!-- Options -->
-          <!-- <option>Grocery</option>
-          <option>Rent</option>
-          <option>Electricity</option>
-          <option>Utilities</option>
-          <option>Gas</option>
-          <option>Resturant</option>
-          <option>Entertainment</option>
-          <option>Subscription</option> -->
-        </select>
+          <option *ngFor="let cat of categories" [value]="cat.categoryID">{{ cat.categoryName }}</option>
+          </select>
       </div>
 
       <!-- Date -->
@@ -47,8 +32,9 @@
 
       <!-- Submit -->
       <div class="d-grid">
-        <button type="submit" class="btn btn-primary">Add Expense</button>
+        <button type="submit" class="btn btn-primary">Save Expense</button>
+        
       </div>
     </form>
   </div>
-</div>
+  </div>
