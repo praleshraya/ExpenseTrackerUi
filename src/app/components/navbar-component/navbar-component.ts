@@ -16,7 +16,19 @@ import { UserService } from '../../services/user-service';
 export class NavbarComponent {
   name:string;
   constructor(private router:Router, private userService: UserService){ 
-     this.name = this.userService.getUsername();
+    //  this.name = this.userService.getUsername();
+  }
+
+  navigateHome(): void {
+    const user = this.userService.getLoggedInUser();
+    if (user && user.userID) {
+      this.router.navigate(['/expenses/users', user.userID]);
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+  navigateProfile():void{
+    this.router.navigate(['/profile'])
   }
 
   logout():void{

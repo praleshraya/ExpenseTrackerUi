@@ -11,15 +11,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <button class="nav-link" routerLink="/expenses/users/:userID" routerLinkActive="active">Home</button>
+          <button class="nav-link" (click)="navigateHome()" routerLinkActive="active">Home</button>
+        
           <!-- <a class="nav-link" routerLink="expenses/users/:userID" routerLinkActive="active">Home</a> -->
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLink="/add-expense" routerLinkActive="active">Add Expense</a>
-        </li>
         <li class="nav-item">
+            <button class="nav-link" (click)="navigateProfile()">Profile</button>
+        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/expenses" routerLinkActive="active">View Expenses</a>
-        </li> -->
+        </li>  -->
       </ul>
 
       <ul class="navbar-nav ms-auto">

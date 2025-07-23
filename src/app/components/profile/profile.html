@@ -1,0 +1,21 @@
+<app-navbar-component></app-navbar-component>
+<div class="d-flex justify-content-center align-items-center vh-100">
+<section class="text-center border p-4 shadow">
+<h2>User Profile</h2>
+<div class="container mt-4">
+  <div *ngIf="user">
+    <p><strong>User ID:</strong> {{ user.userID }}</p>
+    <p><strong>Username:</strong> {{ user.userName }}</p>
+    <p><strong>Email:</strong> {{ user.userEmail }}</p>
+  </div>
+
+   <div *ngIf="!user">
+    <p>User is not logged in.</p>
+    <button class="btn btn-primary" (click)="goToLogin()">Go to Login</button>
+  </div>
+</div>
+</section>
+</div>
+
+
+<!-- ---------------------------- -->
