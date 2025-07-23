@@ -1,9 +1,9 @@
 <app-navbar-component></app-navbar-component>
-<h3>Welcome, {{username}}</h3>
+<h3>Welcome, {{ username }}</h3>
 
 <form class="form-group">
     <button class="addExpenseButton" (click)="addNewExpense()">Add Expense</button>
-    <div *ngIf="expenses.length === 0" cl>Loading your expenses...</div>
+    <div *ngIf="expenses.length === 0" >Loading your expenses...</div>
 
     <table class="table">
 
@@ -14,7 +14,7 @@
                 <th>Amount</th>
                 <th>Category</th>
                 <th>Date</th>
-                <th colspan="2">Actions</th>
+                <!-- <th colspan="2">Actions</th> -->
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                 <td>{{ expense.expenseID }}</td>
                 <td>{{ expense.title }}</td>
                 <td>{{ expense.amount }}</td>
-             <td>{{ expense.categoryName }}</td>
+         <td>{{ expense.categoryName }}</td>
                 <!-- <td>{{ expense.category?.categoryName || 'Not Set' }}</td> -->
              
                 <td>{{ expense.date | date: 'MM/dd/yyyy' }}</td>

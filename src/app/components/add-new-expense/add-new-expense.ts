@@ -7,6 +7,7 @@ import { UserExpense } from '../../models/user-expense';
 import { Category } from '../../models/category';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar-component/navbar-component';
+import { UserExpenseDtoModule } from '../../models/user-expense-dto/user-expense-dto-module';
 
 @Component({
   selector: 'app-add-new-expense',
@@ -27,38 +28,39 @@ export class AddNewExpense implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.addNewExpenseForm = this.formBuilder.group({
+  
+  }
+
+  ngOnInit(): void {
+    const userID = this.route.snapshot.paramMap.get('userID');
+    const expenseID = this.route.snapshot.paramMap.get('expenseID');
+      this.addNewExpenseForm = this.formBuilder.group({
       title: ['', Validators.required],
       amount: ['0', [Validators.required, Validators.min(0)]],
       date: ['', Validators.required],
       categoryID: ['', Validators.required]
     });
+
+    this.userID = userID ? parseInt(userID, 10) : 0;
+    this.expenseID = expenseID ? parseInt(expenseID, 10) : 0;
+
+    this.loadCategories();
+
+    if (this.expenseID) {
+      this.userExpenseService.getExpensesByUser(this.userID).subscribe((expenses: UserExpenseDtoModule[]) => {
+        const expense = expenses.find(exp => exp.expenseID === this.expenseID);
+        if (expense) {
+          this.addNewExpenseForm.patchValue({
+            title: expense.title,
+            amount: expense.amount,
+            date: expense.date?.substring(0, 10),
+            categoryID: expense.categoryID,
+
+          });
+        }
+      });
+    }
   }
-
-  ngOnInit(): void {
-  const userID = this.route.snapshot.paramMap.get('userID');
-  const expenseID = this.route.snapshot.paramMap.get('expenseID');
-
-  this.userID = userID ? parseInt(userID, 10) : 0;
-  this.expenseID = expenseID ? parseInt(expenseID, 10) : 0;
-
-  this.loadCategories();
-
-  if (this.expenseID) {
-    this.userExpenseService.getExpensesByUser(this.userID).subscribe((expenses: UserExpense[]) => {
-      const expense = expenses.find(exp => exp.expenseID === this.expenseID);
-      if (expense) {
-        this.addNewExpenseForm.patchValue({
-          title: expense.title,
-          amount: expense.amount,
-           date: expense.date?.substring(0, 10),
-          categoryID: expense.category?.categoryID,
-          
-        });
-      }
-    });
-  }
-}
 
 
   loadCategories() {
@@ -115,90 +117,91 @@ export class AddNewExpense implements OnInit {
   //   });
   // }
 
-// createUserExpense() {
-//   if (this.addNewExpenseForm.valid) {
-//     const formValue = this.addNewExpenseForm.value;
+  // createUserExpense() {
+  //   if (this.addNewExpenseForm.valid) {
+  //     const formValue = this.addNewExpenseForm.value;
 
-//     const payload = {
-//       title: formValue.title,
-//       amount: formValue.amount,
-//       date: formValue.date,
-//       user: {
-//         userID: this.userID,
-//       },
-//       category: {
-//         categoryID: formValue.categoryID
-//       }
-//     };
+  //     const payload = {
+  //       title: formValue.title,
+  //       amount: formValue.amount,
+  //       date: formValue.date,
+  //       user: {
+  //         userID: this.userID,
+  //       },
+  //       category: {
+  //         categoryID: formValue.categoryID
+  //       }
+  //     };
 
-//     if (this.expenseID) {
-//       // Edit mode
-//       this.userExpenseService.updateUserExpense(this.expenseID, payload).subscribe(() => {
-//         alert("Expense updated successfully.");
-//         this.router.navigate(['/expenses/users', this.userID]);
-//       });
-//     } else {
-//       // Create mode
-//       this.userExpenseService.createUserExpense(payload).subscribe(() => {
-//         alert("Expense created successfully.");
-//         this.router.navigate(['/expenses/users', this.userID]);
-//       });
-//     }
-//   }
-// }
+  //     if (this.expenseID) {
+  //       // Edit mode
+  //       this.userExpenseService.updateUserExpense(this.expenseID, payload).subscribe(() => {
+  //         alert("Expense updated successfully.");
+  //         this.router.navigate(['/expenses/users', this.userID]);
+  //       });
+  //     } else {
+  //       // Create mode
+  //       this.userExpenseService.createUserExpense(payload).subscribe(() => {
+  //         alert("Expense created successfully.");
+  //         this.router.navigate(['/expenses/users', this.userID]);
+  //       });
+  //     }
+  //   }
+  // }
 
   createUserExpense() {
 
     if (this.addNewExpenseForm.valid) {
       const formValue = this.addNewExpenseForm.value;
 
-      const payload = {
-        title: formValue.title,
-        amount: formValue.amount,
-        date: formValue.date,
-        user: {
-          userID: this.userID,
-        },
-        category: {
-          categoryID: formValue.categoryID
+      // const payload = {
+      //   title: formValue.title,
+      //   amount: formValue.amount,
+      //   date: formValue.date,
+      //   user: {
+      //     userID: this.userID,
+      //   },
+      //   category: {
+      //     categoryID: formValue.categoryID
+      //   }
+      // };
+
+
+      if (this.addNewExpenseForm.valid) {
+        const formValue = this.addNewExpenseForm.value;
+        const payload = {
+          title: formValue.title,
+          amount: formValue.amount,
+          date: formValue.date,
+          user: {
+            userID: this.userID,
+          },
+          category:{
+            categoryID: formValue.categoryID,
+          }
+
+
+          
+        };
+        if (this.expenseID) {
+          // Edit mode
+          this.userExpenseService.updateUserExpense(this.expenseID, payload).subscribe(() => {
+            alert("Expense updated successfully.");
+            this.router.navigate(['/expenses/users', this.userID]);
+          });
+        } else {
+          // Create mode
+          this.userExpenseService.createUserExpense(payload).subscribe(() => {
+            alert("Expense created successfully.");
+            this.router.navigate(['/expenses/users', this.userID]);
+          });
         }
-      };
-
-
-  if (this.addNewExpenseForm.valid) {
-    const formValue = this.addNewExpenseForm.value;
-
-    const payload = {
-      title: formValue.title,
-      amount: formValue.amount,
-      date: formValue.date,
-      user: {
-        userID: this.userID,
-      },
-      category: {
-        categoryID: formValue.categoryID
       }
-    };
-
-    if (this.expenseID) {
-      // Edit mode
-      this.userExpenseService.updateUserExpense(this.expenseID, payload).subscribe(() => {
-        alert("Expense updated successfully.");
-        this.router.navigate(['/expenses/users', this.userID]);
-      });
-    } else {
-      // Create mode
-      this.userExpenseService.createUserExpense(payload).subscribe(() => {
-        alert("Expense created successfully.");
-        this.router.navigate(['/expenses/users', this.userID]);
-      });
     }
+
+
   }
+
+
 }
-
-
-    }
-
-  
-  }
 

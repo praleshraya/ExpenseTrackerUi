@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NavbarComponent } from '../navbar-component/navbar-component';
 import { Subscription } from 'rxjs';
+import { UserExpenseDtoModule } from '../../models/user-expense-dto/user-expense-dto-module';
 
 @Component({
   selector: 'app-user-expense-list',
@@ -16,7 +17,7 @@ import { Subscription } from 'rxjs';
   standalone: true
 })
 export class UserExpenseList implements OnInit, OnDestroy {
-  expenses: UserExpense[] = [];
+  expenses: UserExpenseDtoModule[] = [];
   userID!: number;
   username: string = '';
   routeSub!: Subscription;
@@ -30,8 +31,8 @@ export class UserExpenseList implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.username = this.userService.getUsername();
-
+  this.username = this.userService.getUsername();  // Now this will work
+  this.userID = this.userService.getLoggedInUserID();
     // Subscribe to route param changes
     this.routeSub = this.route.paramMap.subscribe(params => {
       const userIDFromRoute = params.get('userID');
@@ -70,7 +71,19 @@ export class UserExpenseList implements OnInit, OnDestroy {
     this.router.navigate(['addExpense', this.userID]);
   }
 
-  editExpense(expense: UserExpense): void {
+  editExpense(dto: UserExpenseDtoModule): void {
+    const expense: UserExpense = {
+    expenseID: dto.expenseID,
+    title: dto.title,
+    amount: dto.amount,
+    date: dto.date,
+    user: {
+      userID: dto.userID
+    },
+    category: {
+      categoryID: dto.categoryID
+    }
+  };
     this.router.navigate(['/editExpense', this.userID, expense.expenseID]);
   }
 

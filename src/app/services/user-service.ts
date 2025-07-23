@@ -20,6 +20,31 @@ export class UserService {
 
   constructor(private http:HttpClient){}
 
+   private loggedInUser: User | null = null;
+  private username: string = '';
+
+  setLoggedInUser(user: User): void {
+    this.loggedInUser = user;
+    this.setUsername(user.userName); // Optional fallback
+  }
+
+  getLoggedInUser(): User | null {
+    return this.loggedInUser;
+  }
+
+  setUsername(name: string): void {
+    this.username = name;
+    sessionStorage.setItem('username', name);  // Persist on refresh
+  }
+
+  getUsername(): string {
+    return this.username || sessionStorage.getItem('username') || '';
+  }
+
+  getLoggedInUserID(): number {
+    return this.loggedInUser?.userID || 0;
+  }
+
   loginFunction(user:User) : Observable<User>{
     return this.http.post<User>(this.userApiUrl.concat("/login"), user, this.httpOptions);
   }
@@ -42,19 +67,6 @@ export class UserService {
 
 
 
- // Set the logged-in user (store username)
-  setLoggedInUser(user: User): void {
-    this.currentUser = user;
-  }
 
-  // Get the username of the logged-in user
-  getUsername(): string {
-    return this.currentUser ? this.currentUser.userName : '';  // Return the username if user is logged in
-  }
-   getLoggedInUserID(): any {
-    if (this.currentUser) {
-      return this.currentUser.userID;
-    }
-  }
   
 }

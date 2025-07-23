@@ -5,6 +5,7 @@ import { UserExpense } from '../models/user-expense';
 import { User } from '../models/user';
 import { UserExpenseList } from '../components/user-expense-list/user-expense-list';
 import { Category } from '../models/category';
+import { UserExpenseDtoModule } from '../models/user-expense-dto/user-expense-dto-module';
 
 // @Injectable({
 //   providedIn: 'root'
@@ -52,8 +53,8 @@ export class UserExpenseService {
   constructor(private http: HttpClient) {}
 
   // Get all expenses by user ID
-  getExpensesByUser(userID: number): Observable<UserExpense[]> {
-    return this.http.get<UserExpense[]>(this.userExpenseApi.concat("/users/")+userID);
+  getExpensesByUser(userID: number): Observable<UserExpenseDtoModule[]> {
+    return this.http.get<UserExpenseDtoModule[]>(this.userExpenseApi.concat("/users/")+userID);
   }
 
   // Create a new expense
