@@ -13,4 +13,7 @@ export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'expenses/users/:userID', component: UserExpenseList },
     { path: 'addExpense/:userID', component: AddNewExpense },
+    { path: 'addExpense/:userID/:expenseID', component: AddNewExpense },
+    { path: 'editExpense/:userID/:expenseID', component: AddNewExpense }
+    
 ];

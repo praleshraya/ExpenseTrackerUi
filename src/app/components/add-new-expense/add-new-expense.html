@@ -1,21 +1,21 @@
+<app-navbar-component></app-navbar-component>
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
   <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px;">
     <h4 class="text-center mb-4">Add New Expense</h4>
 
     <form (ngSubmit)="createUserExpense()" [formGroup]="addNewExpenseForm" class="form-group">
-      <!-- Title -->
+
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" formControlName="title" name="title" id="title" class="form-control" required>
+        <input type="text" formControlName="title" name="title" id="title" class="form-control" placeholder="Enter title for expense" required>
       </div>
 
-      <!-- Amount -->
+
       <div class="mb-3">
         <label for="amount" class="form-label">Amount</label>
         <input type="number" formControlName="amount" name="amount" id="amount" class="form-control" required>
       </div>
 
-      <!-- CategoryName -->
       <div class="mb-3">
         <label for="categoryName" class="form-label">Category</label>
         <select formControlName="categoryID" id="categoryID" class="form-control" required>
@@ -24,17 +24,20 @@
           </select>
       </div>
 
-      <!-- Date -->
+
       <div class="mb-3">
         <label for="date" class="form-label">Date</label>
         <input type="date" formControlName="date" name="date" id="date" class="form-control" required>
       </div>
 
-      <!-- Submit -->
       <div class="d-grid">
-        <button type="submit" class="btn btn-primary">Save Expense</button>
+        <button type="submit" class="btn btn-primary" [disabled]="addNewExpenseForm.invalid">Save Expense</button>
         
       </div>
     </form>
   </div>
   </div>
+
+  <!-- ------------------------------------------------ -->
+
+  

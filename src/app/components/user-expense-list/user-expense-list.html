@@ -1,8 +1,12 @@
+<app-navbar-component></app-navbar-component>
 <h3>Welcome, {{username}}</h3>
 
-<form action="" class="form-group" >
-    <button class="addExpenseButton"  (click)="addNewExpense()">Add Expense</button>
+<form class="form-group">
+    <button class="addExpenseButton" (click)="addNewExpense()">Add Expense</button>
+    <div *ngIf="expenses.length === 0" cl>Loading your expenses...</div>
+
     <table class="table">
+
         <thead>
             <tr>
                 <th>Expense ID</th>
@@ -10,7 +14,7 @@
                 <th>Amount</th>
                 <th>Category</th>
                 <th>Date</th>
-                <th>Actions</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,11 +22,17 @@
                 <td>{{ expense.expenseID }}</td>
                 <td>{{ expense.title }}</td>
                 <td>{{ expense.amount }}</td>
+             <td>{{ expense.categoryName }}</td>
+                <!-- <td>{{ expense.category?.categoryName || 'Not Set' }}</td> -->
+             
                 <td>{{ expense.date | date: 'MM/dd/yyyy' }}</td>
-                <td>{{ expense.category?.categoryName }}</td>
-                <td><button class="btn btn-warning">Edit</button></td>
-                <td><button class="btn btn-danger">Delete</button></td>
+                <td><button class="btn btn-warning" (click)="editExpense(expense)">Edit</button></td>
+                <td><button class="btn btn-danger" (click)="deleteExpense(expense.expenseID)">Delete</button></td>
             </tr>
         </tbody>
     </table>
+
 </form>
+
+
+<!-- ---------------------------- -->

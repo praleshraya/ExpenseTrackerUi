@@ -1,11 +1,19 @@
 import { Category } from "./category";
-import { User } from "./user";
 
+// user-expense.ts
+// user-expense.ts
 export interface UserExpense {
   expenseID?: number;
   title: string;
   amount: number;
   date: string;
-  user: Partial<User>;           // Only userID needed for submission
-  category: Category;            // At least categoryID needed
+  user: {
+    userID: number;
+  };
+  category: {
+    categoryID: number;
+    categoryName?: string; 
+  };
 }
+
+

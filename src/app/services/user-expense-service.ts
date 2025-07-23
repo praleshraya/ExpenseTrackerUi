@@ -53,7 +53,7 @@ export class UserExpenseService {
 
   // Get all expenses by user ID
   getExpensesByUser(userID: number): Observable<UserExpense[]> {
-    return this.http.get<UserExpense[]>(this.userExpenseApi.concat('/users/${userID}'));
+    return this.http.get<UserExpense[]>(this.userExpenseApi.concat("/users/")+userID);
   }
 
   // Create a new expense
@@ -61,15 +61,24 @@ export class UserExpenseService {
 //   return this.http.post<UserExpense>('http://localhost:8080/expenses', expense);
 // }
 
-  createUserExpense(expense: UserExpense): Observable<UserExpense> {
-    return this.http.post<UserExpense>(this.userExpenseApi, expense);
+  createUserExpense(expense: UserExpense): Observable<string> {
+    return this.http.post<string>(this.userExpenseApi.concat("/add"), expense, { responseType: 'text' as 'json' });
+
   }
 
   // Update an existing expense
-  updateUserExpense(expenseID: number, expense: UserExpense): Observable<UserExpense> {
-    return this.http.put<UserExpense>(`${this.userExpenseApi}/users/${expenseID}`, expense);
-  }
+  // updateUserExpense(expenseID: number, expense: UserExpense): Observable<UserExpense> {
+  //   return this.http.put<UserExpense>(`${this.userExpenseApi}/users/${expenseID}`, expense);
+  // }
 
+  updateUserExpense(expenseID: number, expense: UserExpense): Observable<UserExpense> {
+  return this.http.put<UserExpense>(this.userExpenseApi.concat('/users/').concat(expenseID.toString()), expense);
+}
+
+
+deleteUserExpense(expenseID: number): Observable<void> {
+  return this.http.delete<void>(this.userExpenseApi.concat('/users/').concat(expenseID.toString()));
+}
   // Get categories (as an example)
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.categoriesApi);
