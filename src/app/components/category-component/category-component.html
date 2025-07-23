@@ -1,0 +1,24 @@
+<app-navbar-component></app-navbar-component>
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <div class="card shadow-lg p-4" style="width: 100%; max-width: 500px;">
+    <h4 class="text-center mb-4">Add New Category</h4>
+
+    <form (ngSubmit)="createCategory()" [formGroup]="addCategoryForm" class="form-group">
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Category Name</label>
+        <input type="text" formControlName="newCategory" name="newCategory" id="title" class="form-control" placeholder="Enter new category" required>
+      </div>
+
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary" [disabled]="addCategoryForm.invalid">Save Category</button>
+        
+      </div>
+    </form>
+  </div>
+  </div>
+
+  <!-- ------------------------------------------------ -->
+
+  

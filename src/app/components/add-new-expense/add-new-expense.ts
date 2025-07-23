@@ -69,6 +69,11 @@ export class AddNewExpense implements OnInit {
     });
   }
 
+  
+createCategory(){
+    this.router.navigate['/create-category']
+  }
+
 
 
 
