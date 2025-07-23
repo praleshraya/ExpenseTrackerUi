@@ -7,6 +7,7 @@ import { UserExpense } from '../../models/user-expense';
 import { Category } from '../../models/category';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar-component/navbar-component';
+import { UserExpenseDtoModule } from '../../models/user-expense-dto/user-expense-dto-module';
 
 @Component({
   selector: 'app-add-new-expense',
@@ -27,17 +28,18 @@ export class AddNewExpense implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.addNewExpenseForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      amount: ['0', [Validators.required, Validators.min(0)]],
-      date: ['', Validators.required],
-      categoryID: ['', Validators.required]
-    });
+  
   }
 
   ngOnInit(): void {
     const userID = this.route.snapshot.paramMap.get('userID');
     const expenseID = this.route.snapshot.paramMap.get('expenseID');
+      this.addNewExpenseForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      amount: ['0', [Validators.required, Validators.min(0)]],
+      date: ['', Validators.required],
+      categoryID: ['', Validators.required]
+    });
 
     this.userID = userID ? parseInt(userID, 10) : 0;
     this.expenseID = expenseID ? parseInt(expenseID, 10) : 0;
@@ -45,7 +47,7 @@ export class AddNewExpense implements OnInit {
     this.loadCategories();
 
     if (this.expenseID) {
-      this.userExpenseService.getExpensesByUser(this.userID).subscribe((expenses: UserExpense[]) => {
+      this.userExpenseService.getExpensesByUser(this.userID).subscribe((expenses: UserExpenseDtoModule[]) => {
         const expense = expenses.find(exp => exp.expenseID === this.expenseID);
         if (expense) {
           this.addNewExpenseForm.patchValue({
@@ -152,22 +154,21 @@ export class AddNewExpense implements OnInit {
     if (this.addNewExpenseForm.valid) {
       const formValue = this.addNewExpenseForm.value;
 
-      const payload = {
-        title: formValue.title,
-        amount: formValue.amount,
-        date: formValue.date,
-        user: {
-          userID: this.userID,
-        },
-        category: {
-          categoryID: formValue.categoryID
-        }
-      };
+      // const payload = {
+      //   title: formValue.title,
+      //   amount: formValue.amount,
+      //   date: formValue.date,
+      //   user: {
+      //     userID: this.userID,
+      //   },
+      //   category: {
+      //     categoryID: formValue.categoryID
+      //   }
+      // };
 
 
       if (this.addNewExpenseForm.valid) {
         const formValue = this.addNewExpenseForm.value;
-
         const payload = {
           title: formValue.title,
           amount: formValue.amount,
@@ -175,10 +176,13 @@ export class AddNewExpense implements OnInit {
           user: {
             userID: this.userID,
           },
-          categoryID: formValue.categoryID,
-  categoryName: formValue.categoryName
-        };
+          category:{
+            categoryID: formValue.categoryID,
+          }
 
+
+          
+        };
         if (this.expenseID) {
           // Edit mode
           this.userExpenseService.updateUserExpense(this.expenseID, payload).subscribe(() => {
