@@ -11,6 +11,7 @@ export class UserService {
   userApiUrl : string= "http://localhost:8080/users";
 
   currentUser: User | null =null;
+
   httpOptions = {
     headers: new HttpHeaders({
       'Content-type':'application/json',
@@ -18,7 +19,12 @@ export class UserService {
     })
   }
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient){
+     const storedUser = localStorage.getItem('loggedInUser');
+  if (storedUser) {
+    this.currentUser = JSON.parse(storedUser);
+  }
+  }
 
   loginFunction(user:User) : Observable<User>{
     return this.http.post<User>(this.userApiUrl.concat("/login"), user, this.httpOptions);

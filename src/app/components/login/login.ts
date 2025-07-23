@@ -34,6 +34,7 @@ export class Login implements OnInit{
       if(user.userID)
       {
          this.userService.setLoggedInUser(user);  // Store the logged-in user
+        localStorage.setItem('loggedInUser', JSON.stringify(user)); // Persist in storage
         alert("Login Successful")
      this.router.navigate(['/expenses/users', user.userID]);
       }

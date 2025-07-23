@@ -30,6 +30,8 @@ export class UserExpenseList implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+
+    
     this.username = this.userService.getUsername();
 
     // Subscribe to route param changes
@@ -54,17 +56,29 @@ export class UserExpenseList implements OnInit, OnDestroy {
   }
 
   loadExpenses(): void {
-    this.userExpenseService.getExpensesByUser(this.userID).subscribe(
-      result => {
-        console.log('Expenses fetched:', result);
-        this.expenses = result;
-        this.cdr.detectChanges(); // optional, forces UI update
-      },
-      error => {
-        console.error('Error fetching expenses:', error);
-      }
-    );
-  }
+  this.userExpenseService.getExpensesByUser(this.userID).subscribe({
+    next: (result) => {
+      console.log('Expenses fetched:', result);
+      this.expenses = result;
+      this.cdr.detectChanges(); // optional
+    },
+    error: (error) => {
+      console.error('Error fetching expenses:', error);
+    }
+  });
+}
+  // loadExpenses(): void {
+  //   this.userExpenseService.getExpensesByUser(this.userID).subscribe(
+  //     result => {
+  //       console.log('Expenses fetched:', result);
+  //       this.expenses = result;
+  //       this.cdr.detectChanges(); // optional, forces UI update
+  //     },
+  //     error => {
+  //       console.error('Error fetching expenses:', error);
+  //     }
+  //   );
+  // }
 
   addNewExpense(): void {
     this.router.navigate(['addExpense', this.userID]);
@@ -80,7 +94,7 @@ export class UserExpenseList implements OnInit, OnDestroy {
       this.userExpenseService.deleteUserExpense(expenseID).subscribe({
         next: () => {
           alert('Expense deleted successfully.');
-          this.loadExpenses(); // ✅ Refresh list after deletion
+          this.loadExpenses(); 
         },
         error: err => {
           console.error('Error deleting expense:', err);

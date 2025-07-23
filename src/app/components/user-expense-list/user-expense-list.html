@@ -14,7 +14,7 @@
                 <th>Amount</th>
                 <th>Category</th>
                 <th>Date</th>
-                <th colspan="2">Actions</th>
+                <!-- <th colspan="2">Actions</th> -->
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                 <td>{{ expense.expenseID }}</td>
                 <td>{{ expense.title }}</td>
                 <td>{{ expense.amount }}</td>
-             <td>{{ expense.category?.categoryName }}</td>
+           <td>{{ expense.categoryName }}</td>
                 <!-- <td>{{ expense.category?.categoryName || 'Not Set' }}</td> -->
              
                 <td>{{ expense.date | date: 'MM/dd/yyyy' }}</td>

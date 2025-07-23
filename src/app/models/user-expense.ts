@@ -10,10 +10,12 @@ export interface UserExpense {
   user: {
     userID: number;
   };
-  category: {
+  // category: {
+  //   categoryID: number;
+  //   categoryName: string; 
+  // };
     categoryID: number;
-    categoryName?: string; 
-  };
+  categoryName: string;
 }
 
 

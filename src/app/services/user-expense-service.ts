@@ -43,6 +43,7 @@ export class UserExpenseService {
    userExpenseApi = 'http://localhost:8080/expenses';
   categoriesApi = 'http://localhost:8080/categories';
 
+
   httpOptions ={
     headers: new Headers( {
       'Content-Type':'application/json'

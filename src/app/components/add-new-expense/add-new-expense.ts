@@ -52,7 +52,7 @@ export class AddNewExpense implements OnInit {
             title: expense.title,
             amount: expense.amount,
             date: expense.date?.substring(0, 10),
-            categoryID: expense.category?.categoryID,
+            categoryID: expense.categoryID,
 
           });
         }
@@ -175,9 +175,8 @@ export class AddNewExpense implements OnInit {
           user: {
             userID: this.userID,
           },
-          category: {
-            categoryID: formValue.categoryID
-          }
+          categoryID: formValue.categoryID,
+  categoryName: formValue.categoryName
         };
 
         if (this.expenseID) {
