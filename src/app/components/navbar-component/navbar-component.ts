@@ -6,16 +6,16 @@ import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-navbar-component',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule
-
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './navbar-component.html',
   styleUrl: './navbar-component.css',
-  standalone:true
+  standalone: true
 })
 export class NavbarComponent {
-  name:string;
-  constructor(private router:Router, private userService: UserService){ 
+  name: string;
+  username: string | null = null;
+  constructor(private router: Router, private userService: UserService) {
+    this.username = this.userService.getUsername();
     //  this.name = this.userService.getUsername();
   }
 
@@ -27,12 +27,20 @@ export class NavbarComponent {
       this.router.navigate(['/login']);
     }
   }
-  navigateProfile():void{
+
+  navigateProfile(): void {
     this.router.navigate(['/profile'])
   }
 
-  logout():void{
+  navigateDashboard(): void {
+    console.log('Navigating with username:', this.username); // or this.userName
+    this.router.navigate(['/dashboard'], {
+      state: { username: this.username }  // make sure the key matches what dashboard expects
+    });                                   // 
+  }
+
+  logout(): void {
     this.router.navigate(['/login']);
   }
-    
+
 }

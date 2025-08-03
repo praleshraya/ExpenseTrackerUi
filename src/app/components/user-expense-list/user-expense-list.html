@@ -2,7 +2,7 @@
 <h3>Welcome, {{ username }}</h3>
 
 <form class="form-group">
-    <button class="addExpenseButton" (click)="addNewExpense()">Add Expense</button>
+    <button class="addExpenseButton" (click)="addNewExpense()"><fa-icon [icon]="faAdd"></fa-icon>Add Expense</button>
     <div *ngIf="expenses.length === 0" >Loading your expenses...</div>
 
     <table class="table">
@@ -26,8 +26,8 @@
                 <!-- <td>{{ expense.category?.categoryName || 'Not Set' }}</td> -->
              
                 <td>{{ expense.date | date: 'MM/dd/yyyy' }}</td>
-                <td><button class="btn btn-warning" (click)="editExpense(expense)">Edit</button></td>
-                <td><button class="btn btn-danger" (click)="deleteExpense(expense.expenseID)">Delete</button></td>
+                <td><button class="btn btn-warning editButton" (click)="editExpense(expense)"><fa-icon [icon]="faScissors"></fa-icon>Edit</button></td>
+                <td><button class="btn btn-danger deleteButton" (click)="deleteExpense(expense.expenseID)"><fa-icon [icon]="faTrash"></fa-icon>Delete</button></td>
             </tr>
         </tbody>
     </table>

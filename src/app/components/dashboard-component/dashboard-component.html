@@ -1,0 +1,113 @@
+<app-navbar-component></app-navbar-component>
+
+
+
+<div class="dashboard-container  vh-100">
+  <div class="header">
+    <h1>Welcome to Your Dashboard, {{ username }}</h1>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="dashboard-card">
+      <h2>Total Expenses</h2>
+      <p class="card-value">{{ totalExpenses | currency }}</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Expenses by Category</h2>
+
+      <ul>
+        <li *ngFor="let category of categoryTotals | keyvalue">
+          {{ category.key }}: {{ category.value | currency }}
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Expenses: Month | Year</h2>
+  
+      <ul>
+        <li *ngFor="let date of dateTotals | keyvalue">
+          {{ date.key }}: {{ date.value | currency }}
+        </li>
+      </ul>
+
+    </div>
+    <div class="dashboard-card">
+      <h2>Expenses by Range</h2>
+      <div> 
+      <div>
+          <label for="start">Start Date:</label>
+          <input type="date" id="start" [(ngModel)]="startDate" name="startDate">
+       </div>
+       <br>
+    <div>
+      <label for="end">End Date:</label>
+      <input type="date" id="end" [(ngModel)]="endDate" name="endDate">
+      <br><br>
+      <button class="p-1 btn btn-info" (click)="getExpenseByRange()">Select Date</button>
+    </div>
+    </div>
+    <br>
+      <ul>
+        <li *ngFor="let dateRange of dateRangeTotals | keyvalue">
+          {{ dateRange.key }}: {{ dateRange.value | currency }}
+        </li>
+      </ul>
+    </div>
+  
+    
+  </div>
+</div>
+
+
+
+
+<!-- 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script> -->
+
+
+
+
+
+<!-- <div class="dashboard-container">
+  <h1>Dashboard</h1> -->
+  <!-- Total Expenses -->
+  <!-- <div>
+    <h3>Total Expenses</h3>
+    <p>{{ totalExpenses | currency }}</p>
+  </div> -->
+
+  <!-- Expenses by Category -->
+  <!-- <div>
+    <h3>Expenses by Category</h3>
+    <ul>
+      <li *ngFor="let category of categoryTotals | keyvalue">
+        {{ category.key }}: {{ category.value | currency }}
+      </li>
+    </ul>
+  </div> -->
+
+  <!-- Expenses by Date -->
+  <!-- <div>
+    <h3>Expenses by Date</h3>
+    <ul>
+      <li *ngFor="let date of dateTotals | keyvalue">
+        {{ date.key }}: {{ date.value | currency }}
+      </li>
+    </ul>
+  </div> -->
+
+  <!-- Expenses by Date Range -->
+  <!-- <div>
+    <h3>Expenses by Date Range ({{ startDate }} to {{ endDate }})</h3>
+    <ul>
+      <li *ngFor="let dateRange of dateRangeTotals | keyvalue">
+        {{ dateRange.key }}: {{ dateRange.value | currency }}
+      </li>
+    </ul>
+  </div>
+</div> -->
+

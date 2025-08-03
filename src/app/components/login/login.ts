@@ -8,55 +8,53 @@ import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login implements OnInit{
+export class Login implements OnInit {
 
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder:FormBuilder, private router: Router, private userService: UserService)
-  {
+  constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
     //constructor
   }
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-       userName: ['',Validators.required],
-      userPassword:['', Validators.required]
+      userName: ['', Validators.required],
+      userPassword: ['', Validators.required]
     })
   }
 
-  loginFunction():void{
+  loginFunction(): void {
     const user = this.loginForm.value;
-    this.userService.loginFunction(user).subscribe((user:User)=>{
-      if(user.userID)
-      {
-         this.userService.setLoggedInUser(user);  // Store the logged-in user
-            this.userService.setUsername(user.userName);
+    this.userService.loginFunction(user).subscribe((user: User) => {
+      if (user.userID) {
+        this.userService.setLoggedInUser(user);
+        this.userService.setUsername(user.userName);
         alert("Login Successful")
-     this.router.navigate(['/expenses/users', user.userID]);
+        this.router.navigate(['/expenses/users', user.userID]);
       }
-      else{
+      else {
         alert("Invalid username or password.")
       }
     })
   }
 
-  gotoSignup():void{
+  gotoSignup(): void {
     this.router.navigate['signup'];
   }
 
- 
-
- }
 
 
- 
+}
 
-   
- 
+
+
+
+
+
 
 
 

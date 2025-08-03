@@ -8,10 +8,12 @@ import { Category } from '../../models/category';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar-component/navbar-component';
 import { UserExpenseDtoModule } from '../../models/user-expense-dto/user-expense-dto-module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faA, faAdd } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-add-new-expense',
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, NavbarComponent, RouterModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NavbarComponent, RouterModule, FontAwesomeModule],
   templateUrl: './add-new-expense.html',
   styleUrl: './add-new-expense.css',
   standalone: true
@@ -21,6 +23,7 @@ export class AddNewExpense implements OnInit {
   expenseID: number = 0;
   userID: number = 0;
   categories: Category[] = [];
+  faAdd = faAdd;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,13 +31,13 @@ export class AddNewExpense implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-  
+
   }
 
   ngOnInit(): void {
     const userID = this.route.snapshot.paramMap.get('userID');
     const expenseID = this.route.snapshot.paramMap.get('expenseID');
-      this.addNewExpenseForm = this.formBuilder.group({
+    this.addNewExpenseForm = this.formBuilder.group({
       title: ['', Validators.required],
       amount: ['0', [Validators.required, Validators.min(0)]],
       date: ['', Validators.required],
@@ -69,8 +72,8 @@ export class AddNewExpense implements OnInit {
     });
   }
 
-  
-createCategory(){
+
+  createCategory() {
     this.router.navigate['/create-category']
   }
 
@@ -181,12 +184,12 @@ createCategory(){
           user: {
             userID: this.userID,
           },
-          category:{
+          category: {
             categoryID: formValue.categoryID,
           }
 
 
-          
+
         };
         if (this.expenseID) {
           // Edit mode

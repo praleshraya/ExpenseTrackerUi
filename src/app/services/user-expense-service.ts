@@ -85,7 +85,41 @@ deleteUserExpense(expenseID: number): Observable<void> {
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.categoriesApi);
   }
+
+   // Get total expenses for a user
+  getTotalExpenses(userID: number): Observable<number> {
+    return this.http.get<number>(`${this.userExpenseApi}/total/${userID}`);
+  }
+
+  // Get expenses by category for a user
+  getExpensesByCategory(userID: number): Observable<any> {
+    return this.http.get<any>(`${this.userExpenseApi}/category/${userID}`);
+  }
+
+  // Get expenses by date for a user
+  getExpensesByDate(userID: number): Observable<any> {
+    return this.http.get<any>(`${this.userExpenseApi}/date/${userID}`);
+  }
+
+  // Get expenses for a user within a specific date range
+  getExpensesByRange(
+    userID: number,
+    startDate: string,
+    endDate: string
+  ): Observable<any> {
+    return this.http.get<any>(
+      `${this.userExpenseApi}/range/${userID}?startDate=${startDate}&endDate=${endDate}`
+    );
+  }
+
+  // Get expense chart data for a user (used for chart display)
+  getExpenseChartData(userID: number): Observable<any> {
+    return this.http.get<any>(`${this.userExpenseApi}/chart/${userID}`);
+  }
+
 }
+
+
 
 
 

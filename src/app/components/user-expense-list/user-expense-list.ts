@@ -4,14 +4,17 @@ import { UserExpense } from '../../models/user-expense';
 import { UserExpenseService } from '../../services/user-expense-service';
 import { UserService } from '../../services/user-service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../navbar-component/navbar-component';
 import { Subscription } from 'rxjs';
 import { UserExpenseDtoModule } from '../../models/user-expense-dto/user-expense-dto-module';
+import { faAdd, faTrash} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faScissors } from '@fortawesome/free-solid-svg-icons/faScissors';
 
 @Component({
   selector: 'app-user-expense-list',
-  imports: [CommonModule, DatePipe, NavbarComponent],
+  imports: [CommonModule, NavbarComponent, FontAwesomeModule],
   templateUrl: './user-expense-list.html',
   styleUrl: './user-expense-list.css',
   standalone: true
@@ -21,7 +24,9 @@ export class UserExpenseList implements OnInit, OnDestroy {
   userID!: number;
   username: string = '';
   routeSub!: Subscription;
-
+ faTrash = faTrash;
+ faAdd=faAdd
+  faScissors = faScissors;
   constructor(
     private userExpenseService: UserExpenseService,
     private route: ActivatedRoute,

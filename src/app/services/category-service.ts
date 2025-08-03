@@ -17,6 +17,11 @@ export class CategoryService {
     })
   }
 
+  // Get all categories
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.categoriesApi);
+  }
+
     createNewCategory(category: Category): Observable<string> {
       return this.http.post(this.categoriesApi, category, { responseType: 'text' as const});
     }

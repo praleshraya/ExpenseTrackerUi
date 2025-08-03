@@ -8,6 +8,7 @@ import { UserExpenseList } from './components/user-expense-list/user-expense-lis
 import { AddNewExpense } from './components/add-new-expense/add-new-expense';
 import { CategoryComponent } from './components/category-component/category-component';
 import { Profile } from './components/profile/profile';
+import { DashboardComponent } from './components/dashboard-component/dashboard-component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -19,6 +20,5 @@ export const routes: Routes = [
     { path: 'editExpense/:userID/:expenseID', component: AddNewExpense },
     { path: 'create-category', component: CategoryComponent },
     { path: 'profile', component: Profile },
-    
-    
+    { path: 'dashboard', component: DashboardComponent },
 ];

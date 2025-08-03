@@ -14,8 +14,9 @@ export class UserExpenseDtoModule {
   title: string;
   amount: number;
   date: string;
-  userID: number;
+  userID?: number;
   categoryID: number;
   categoryName: string;
+  
     
  }

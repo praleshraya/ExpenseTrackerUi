@@ -1,21 +1,85 @@
 <app-navbar-component></app-navbar-component>
+
 <div class="d-flex justify-content-center align-items-center vh-100">
-<section class="text-center border p-4 shadow">
-<h2>User Profile</h2>
-<div class="container mt-4">
-  <div *ngIf="user">
-    <p><strong>User ID:</strong> {{ user.userID }}</p>
-    <p><strong>Username:</strong> {{ user.userName }}</p>
-    <p><strong>Email:</strong> {{ user.userEmail }}</p>
-  </div>
+  <section class="text-center border p-4 shadow">
+    <h2>User Profile</h2>
 
-   <div *ngIf="!user">
-    <p>User is not logged in.</p>
-    <button class="btn btn-primary" (click)="goToLogin()">Go to Login</button>
+    <div *ngIf="user">
+      <p><strong>User ID:</strong> {{ user.userID }}</p>
+      <p><strong>Username:</strong> {{ user.userName }}</p>
+      <p><strong>Email:</strong> {{ user.userEmail }}</p>
+
+      <!-- Buttons -->
+      <button class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+        Edit Profile
+      </button>
+      <button class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+        Change Password
+      </button>
+    </div>
+
+    <div *ngIf="!user">
+      <p>User is not logged in.</p>
+      <button class="btn btn-primary" (click)="goToLogin()">Go to Login</button>
+    </div>
+  </section>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form (ngSubmit)="updateProfile()" #profileForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label>Username:</label>
+          <input type="text" [(ngModel)]="user.userName" name="username" class="form-control" required />
+
+          <label>Email:</label>
+          <input type="email" [(ngModel)]="user.userEmail" name="email" class="form-control" required />
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Save Changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-</section>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form (ngSubmit)="updatePassword()" #passwordForm="ngForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <label>Old Password:</label>
+          <input type="password" [(ngModel)]="oldPassword" name="oldPassword" class="form-control" required />
+
+          <label>New Password:</label>
+          <input type="password" [(ngModel)]="newPassword" name="newPassword" class="form-control" required />
+
+          <label>Confirm New Password:</label>
+          <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" class="form-control" required />
+
+          <div *ngIf="newPassword && confirmPassword && newPassword !== confirmPassword" class="text-danger mt-2">
+            Passwords do not match.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning" [disabled]="newPassword !== confirmPassword">
+            Update Password
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-
-
-<!-- ---------------------------- -->
